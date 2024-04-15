@@ -1,0 +1,21 @@
+-- Create table command
+CREATE TABLE employees (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(50),
+    age INT,
+    department VARCHAR(50),
+    salary DECIMAL(10, 2)
+);
+
+-- Insert command
+INSERT INTO employees (name, age, department, salary)
+VALUES ('John Doe', 40, 'IT', 65000);
+
+-- Update command
+UPDATE employees
+SET salary = 60000
+WHERE department = 'IT';
+
+-- Delete command
+DELETE FROM employees
+WHERE age > 65;
