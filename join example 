@@ -1,0 +1,29 @@
+-- Create the students table
+CREATE TABLE students (
+    student_id INT PRIMARY KEY,
+    student_name VARCHAR(50) NOT NULL,
+    age INT,
+    city VARCHAR(50)
+);
+
+-- Create the courses table
+CREATE TABLE courses (
+    course_id INT PRIMARY KEY,
+    course_name VARCHAR(50) NOT NULL,
+    instructor VARCHAR(50),
+    credits INT
+);
+
+-- Insert some sample data into the students table
+INSERT INTO students (student_id, student_name, age, city)
+VALUES
+    (1, 'Alice', 20, 'New York'),
+    (2, 'Bob', 22, 'Los Angeles'),
+    (3, 'Charlie', 21, 'Chicago');
+
+-- Insert some sample data into the courses table
+INSERT INTO courses (course_id, course_name, instructor, credits)
+VALUES
+    (101, 'Mathematics', 'Dr. Smith', 3),
+    (102, 'History', 'Prof. Johnson', 4),
+    (103, 'Computer Science', 'Dr. Williams', 3);
