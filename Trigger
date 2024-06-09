@@ -1,0 +1,42 @@
+-- Create Orders table
+CREATE TABLE Orders (
+    OrderID INT PRIMARY KEY IDENTITY,
+    OrderDate DATETIME,
+    CustomerName NVARCHAR(100),
+    Amount DECIMAL(10, 2)
+);
+
+-- Create OrderAudit table
+CREATE TABLE OrderAudit (
+    AuditID INT PRIMARY KEY IDENTITY,
+    OrderID INT,
+    OrderDate DATETIME,
+    CustomerName NVARCHAR(100),
+    Amount DECIMAL(10, 2),
+    AuditDate DATETIME
+);
+
+-- Create the trigger
+CREATE TRIGGER trgAfterInsertOrder
+ON Orders
+AFTER INSERT
+AS
+BEGIN
+    -- Insert the new record into the OrderAudit table
+    INSERT INTO OrderAudit (OrderID, OrderDate, CustomerName, Amount, AuditDate)
+    SELECT 
+        OrderID, 
+        OrderDate, 
+        CustomerName, 
+        Amount, 
+        GETDATE() -- Current date and time for the audit
+    FROM inserted;
+END;
+
+
+-- Insert a new order
+INSERT INTO Orders (OrderDate, CustomerName, Amount)
+VALUES (GETDATE(), 'John Doe', 99.99);
+
+-- Check the OrderAudit table
+SELECT * FROM OrderAudit;
