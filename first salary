@@ -1,0 +1,26 @@
+CREATE TABLE employee (
+    employee_id INT PRIMARY KEY,
+    first_name NVARCHAR(50),
+    last_name NVARCHAR(50),
+    department NVARCHAR(50),
+    salary DECIMAL(10, 2),
+    hire_date DATE
+);
+
+
+INSERT INTO employee (employee_id, first_name, last_name, department, salary, hire_date)
+VALUES
+(1, 'John', 'Doe', 'Engineering', 60000.00, '2020-01-15'),
+(2, 'Jane', 'Smith', 'Marketing', 55000.00, '2019-03-22'),
+(3, 'Emily', 'Davis', 'HR', 58000.00, '2021-05-11'),
+(4, 'Michael', 'Brown', 'Sales', 62000.00, '2018-07-19'),
+(5, 'Sarah', 'Wilson', 'Engineering', 59000.00, '2022-02-10');
+
+
+WITH CTE AS (
+    SELECT salary, ROW_NUMBER() OVER (PARTITION BY 1 ORDER BY (SELECT NULL)) AS row_num
+    FROM employee
+)
+SELECT salary
+FROM CTE
+WHERE row_num = 1;
