@@ -1,0 +1,19 @@
+CREATE TABLE employees (
+    id INT PRIMARY KEY,
+    name VARCHAR(100),
+    salary DECIMAL(10, 2)
+);
+
+SELECT DISTINCT salary
+FROM employees
+ORDER BY salary DESC
+LIMIT 2, 1;
+
+using row number 
+
+SELECT salary
+FROM (
+    SELECT salary, ROW_NUMBER() OVER (ORDER BY salary DESC) AS row_num
+    FROM employees
+) AS ranked_salaries
+WHERE row_num = 3;
