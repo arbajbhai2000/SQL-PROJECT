@@ -1,0 +1,31 @@
+-- Create the function
+CREATE OR REPLACE FUNCTION calculate_total_price(price_per_item NUMERIC, quantity INTEGER)
+RETURNS NUMERIC AS $$
+BEGIN
+    RETURN price_per_item * quantity;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Create the orders table
+CREATE TABLE orders (
+    order_id SERIAL PRIMARY KEY,
+    item_name VARCHAR(100),
+    price_per_item NUMERIC,
+    quantity INTEGER
+);
+
+-- Insert sample data
+INSERT INTO orders (item_name, price_per_item, quantity) VALUES
+('Laptop', 1000.00, 2),
+('Mouse', 25.00, 5),
+('Keyboard', 45.00, 3);
+
+-- Use the function in a query
+SELECT 
+    order_id,
+    item_name,
+    price_per_item,
+    quantity,
+    calculate_total_price(price_per_item, quantity) AS total_price
+FROM 
+    orders;
