@@ -1,0 +1,9 @@
+-- Inner join example
+SELECT employees.first_name, employees.last_name, departments.department_name
+FROM employees
+INNER JOIN departments ON employees.department_id = departments.id;
+
+-- Left join example
+SELECT employees.first_name, employees.last_name, departments.department_name
+FROM employees
+LEFT JOIN departments ON employees.department_id = departments.id;
