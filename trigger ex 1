@@ -1,0 +1,27 @@
+CREATE TABLE employees (
+    employee_id INT PRIMARY KEY,
+    first_name VARCHAR(50),
+    last_name VARCHAR(50),
+    hire_date DATE
+);
+
+CREATE TABLE employee_audit (
+    audit_id INT PRIMARY KEY AUTO_INCREMENT,
+    employee_id INT,
+    action VARCHAR(50),
+    action_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+DELIMITER $$
+
+CREATE TRIGGER after_employee_insert
+AFTER INSERT ON employees
+FOR EACH ROW
+BEGIN
+    INSERT INTO employee_audit (employee_id, action)
+    VALUES (NEW.employee_id, 'INSERT');
+END$$
+
+DELIMITER ;
+
+INSERT INTO employees (employee_id, first_name, last_name, hire_date)
+VALUES (1, 'John', 'Doe', '2024-06-17');
