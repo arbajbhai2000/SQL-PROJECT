@@ -1,0 +1,20 @@
+CREATE TABLE Departments (
+    DepartmentID INT PRIMARY KEY,
+    DepartmentName VARCHAR(50)
+);
+
+INSERT INTO Departments (DepartmentID, DepartmentName)
+VALUES (1, 'HR'), (2, 'Engineering'), (3, 'Sales');
+
+CREATE TABLE EmployeeDepartments (
+    EmployeeID INT,
+    DepartmentID INT,
+    FOREIGN KEY (EmployeeID) REFERENCES Employees(EmployeeID),
+    FOREIGN KEY (DepartmentID) REFERENCES Departments(DepartmentID)
+);
+
+INSERT INTO EmployeeDepartments (EmployeeID, DepartmentID)
+VALUES (1, 2), (2, 1);SELECT e.FirstName, e.LastName, d.DepartmentName
+FROM Employees e
+JOIN EmployeeDepartments ed ON e.EmployeeID = ed.EmployeeID
+JOIN Departments d ON ed.DepartmentID = d.DepartmentID;
