@@ -1,0 +1,21 @@
+CREATE TABLE sales (
+    sale_id INT PRIMARY KEY,
+    product_id INT,
+    quantity INT,
+    price DECIMAL(10, 2)
+);
+
+CREATE FUNCTION GetTotalSales(product_id INT) 
+RETURNS DECIMAL(10, 2)
+BEGIN
+    DECLARE total_sales DECIMAL(10, 2);
+
+    SELECT SUM(quantity * price)
+    INTO total_sales
+    FROM sales
+    WHERE product_id = product_id;
+
+    RETURN total_sales;
+END;
+
+
