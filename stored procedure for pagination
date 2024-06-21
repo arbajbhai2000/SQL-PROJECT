@@ -1,0 +1,34 @@
+CREATE PROCEDURE GetPagedProducts
+    @PageNumber INT,
+    @PageSize INT
+AS
+BEGIN
+    -- Calculate the starting row number
+    DECLARE @StartRow INT = (@PageNumber - 1) * @PageSize + 1;
+    DECLARE @EndRow INT = @PageNumber * @PageSize;
+
+    -- Use a CTE (Common Table Expression) to get the paginated results
+    WITH PagedProducts AS
+    (
+        SELECT 
+            ROW_NUMBER() OVER (ORDER BY ProductID) AS RowNum,
+            *
+        FROM 
+            Products
+    )
+    SELECT 
+        *
+    FROM 
+        PagedProducts
+    WHERE 
+        RowNum BETWEEN @StartRow AND @EndRow;
+
+END
+GO
+
+
+-- Get the first page with 10 products per page
+EXEC GetPagedProducts @PageNumber = 1, @PageSize = 10;
+
+-- Get the second page with 10 products per page
+EXEC GetPagedProducts @PageNumber = 2, @PageSize = 10;
