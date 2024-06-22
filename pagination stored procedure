@@ -1,0 +1,42 @@
+CREATE PROCEDURE GetPagedEmployees
+    @PageSize INT,
+    @PageNumber INT
+AS
+BEGIN
+    -- Calculate the starting row number
+    DECLARE @StartRow INT
+    DECLARE @EndRow INT
+
+    SET @StartRow = (@PageNumber - 1) * @PageSize + 1
+    SET @EndRow = @PageNumber * @PageSize
+
+    -- Select the paginated results
+    ;WITH EmployeeCTE AS (
+        SELECT 
+            ROW_NUMBER() OVER (ORDER BY EmployeeID) AS RowNum, 
+            EmployeeID, 
+            FirstName, 
+            LastName, 
+            Title
+        FROM 
+            Employees
+    )
+    SELECT 
+        EmployeeID, 
+        FirstName, 
+        LastName, 
+        Title
+    FROM 
+        EmployeeCTE
+    WHERE 
+        RowNum BETWEEN @StartRow AND @EndRow
+
+    -- Check if there are more pages
+    DECLARE @TotalRows INT
+    SELECT @TotalRows = COUNT(*) FROM Employees
+
+    IF (@EndRow < @TotalRows)
+        PRINT 'Has More Pages: Yes'
+    ELSE
+        PRINT 'Has More Pages: No'
+END
