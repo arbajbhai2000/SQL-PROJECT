@@ -1,0 +1,14 @@
+DELIMITER $$
+
+CREATE PROCEDURE InsertEmployee(
+    IN empName VARCHAR(100),
+    IN empPosition VARCHAR(100),
+    IN empSalary DECIMAL(10, 2)
+)
+BEGIN
+    INSERT INTO Employees (Name, Position, Salary)
+    VALUES (empName, empPosition, empSalary);
+END$$
+
+DELIMITER ;
+CALL InsertEmployee('John Doe', 'Manager', 75000.00);
