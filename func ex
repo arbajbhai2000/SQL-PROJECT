@@ -1,0 +1,21 @@
+CREATE FUNCTION function_name (@parameter1 datatype, @parameter2 datatype)
+RETURNS return_datatype
+AS
+BEGIN
+    -- Function logic goes here
+    DECLARE @result return_datatype;
+    
+    -- Example calculation
+    SET @result = @parameter1 + @parameter2;
+    
+    RETURN @result;
+END;CREATE FUNCTION function_name (@parameter1 datatype, @parameter2 datatype)
+RETURNS TABLE
+AS
+RETURN
+(
+    -- Query logic goes here
+    SELECT column1, column2
+    FROM some_table
+    WHERE column1 = @parameter1 AND column2 = @parameter2
+);
