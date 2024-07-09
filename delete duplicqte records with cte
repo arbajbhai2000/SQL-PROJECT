@@ -1,0 +1,29 @@
+CREATE TABLE Employees (
+    EmployeeID INT,
+    EmployeeName VARCHAR(100),
+    Department VARCHAR(100)
+);
+
+INSERT INTO Employees (EmployeeID, EmployeeName, Department)
+VALUES
+    (1, 'John Doe', 'HR'),
+    (2, 'Jane Smith', 'IT'),
+    (3, 'John Doe', 'HR'), -- Duplicate row
+    (4, 'Emily Davis', 'Finance'),
+    (5, 'Jane Smith', 'IT'); -- Duplicate row
+
+
+WITH CTE AS (
+    SELECT 
+        EmployeeID,
+        EmployeeName,
+        Department,
+        ROW_NUMBER() OVER (PARTITION BY EmployeeID, EmployeeName, Department ORDER BY EmployeeID) AS row_num
+    FROM Employees
+)
+DELETE FROM Employees
+WHERE EmployeeID IN (
+    SELECT EmployeeID
+    FROM CTE
+    WHERE row_num > 1
+);
