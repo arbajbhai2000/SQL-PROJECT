@@ -1,0 +1,29 @@
+-- Declare variables to hold data
+DECLARE @EmployeeID INT, @FirstName NVARCHAR(50), @LastName NVARCHAR(50)
+
+-- Declare the cursor
+DECLARE EmployeeCursor CURSOR FOR
+SELECT EmployeeID, FirstName, LastName
+FROM Employees
+
+-- Open the cursor
+OPEN EmployeeCursor
+
+-- Fetch the first row into the variables
+FETCH NEXT FROM EmployeeCursor INTO @EmployeeID, @FirstName, @LastName
+
+-- Loop through the result set
+WHILE @@FETCH_STATUS = 0
+BEGIN
+    -- Process the data (for example, print it)
+    PRINT 'Employee ID: ' + CAST(@EmployeeID AS NVARCHAR(10)) + ', Name: ' + @FirstName + ' ' + @LastName
+
+    -- Fetch the next row into the variables
+    FETCH NEXT FROM EmployeeCursor INTO @EmployeeID, @FirstName, @LastName
+END
+
+-- Close the cursor
+CLOSE EmployeeCursor
+
+-- Deallocate the cursor
+DEALLOCATE EmployeeCursor
