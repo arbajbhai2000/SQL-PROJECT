@@ -1,0 +1,5 @@
+SELECT Departments.DepartmentName, AVG(Salaries.Salary) AS AverageSalary
+FROM Salaries
+INNER JOIN Employees ON Salaries.EmployeeID = Employees.EmployeeID
+INNER JOIN Departments ON Employees.DepartmentID = Departments.DepartmentID
+GROUP BY Departments.DepartmentName;
