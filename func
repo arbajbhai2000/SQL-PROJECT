@@ -1,0 +1,22 @@
+CREATE FUNCTION dbo.GetFullName
+(
+    @FirstName NVARCHAR(50),
+    @LastName NVARCHAR(50)
+)
+RETURNS NVARCHAR(101)
+AS
+BEGIN
+    RETURN @FirstName + ' ' + @LastName;
+END
+GO
+SELECT dbo.GetFullName('John', 'Doe') AS FullName;
+CREATE FUNCTION dbo.GetEmployeeDetails (@DepartmentID INT)
+RETURNS TABLE
+AS
+RETURN
+(
+    SELECT EmployeeID, FirstName, LastName
+    FROM Employees
+    WHERE DepartmentID = @DepartmentID
+);
+GO
