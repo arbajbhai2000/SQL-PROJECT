@@ -1,0 +1,12 @@
+CREATE FUNCTION GetEmployeeFullName (@EmployeeID INT)
+RETURNS VARCHAR(100)
+AS
+BEGIN
+    DECLARE @FullName VARCHAR(100)
+    
+    SELECT @FullName = FirstName + ' ' + LastName
+    FROM Employees
+    WHERE EmployeeID = @EmployeeID
+    
+    RETURN @FullName
+END
